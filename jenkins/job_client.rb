@@ -36,6 +36,10 @@ module Jenkins
     end
 
     def perform_request(url, method = :get, **args)
+      puts "URL: #{url}"
+      puts "METHOD: #{method}"
+      puts "JENKINS_USER: #{jenkins_user}"
+      puts "JENKINS_TOKEN: #{jenkins_token[0..5]}"
       response = RestClient::Request.execute method: method, url: url, user: jenkins_user, password: jenkins_token, args: args
       response_code = response.code
       raise "Error on #{method} to #{url} [#{response_code}]" unless (200..299).include? response_code
