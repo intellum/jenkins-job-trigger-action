@@ -111,12 +111,13 @@ module Jenkins
           fail!('JOB ABORTED')
         end
       end
+
       if build_result == 'SUCCESS'
           puts 'DDL validation with SUCCESS status!'
       elsif timeout_countdown == 0
           fail!("JOB FOLLOW TIMED OUT (After #{job_timeout} seconds)")
       else
-        puts "DDL validation with #{build_result} status."
+        puts "DDL validation with '#{build_result}' status."
         begin
             log_response = perform_request(job_log_url, :get)
             puts log_response.body.force_encoding('utf-8')
