@@ -97,7 +97,7 @@ module Jenkins
       build_response = nil
       build_result = nil
       timeout_countdown = job_timeout
-      while build_result.nil? and timeout_countdown > 0
+      while (build_result.nil? || build_result.empty?) and timeout_countdown > 0
         begin
             build_response = perform_request(job_progress_url, :get)
             result = JSON.parse(build_response)['result']
@@ -105,7 +105,7 @@ module Jenkins
         rescue
             # "NOOP"
         end
-        if build_result.nil?
+        if (build_result.nil? || build_result.empty?)
             timeout_countdown = timeout_countdown - sleep(INTERVAL_SECONDS)
         elsif build_result == 'ABORTED'
           fail!('JOB ABORTED')
