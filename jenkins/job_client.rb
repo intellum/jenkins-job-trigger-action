@@ -102,6 +102,7 @@ module Jenkins
             build_response = perform_request(job_progress_url, :get)
             result = JSON.parse(build_response)['result']
             build_result = result || build_result
+            puts JSON.pretty_generate(JSON.parse(build_response))
         rescue
             # "NOOP"
         end
